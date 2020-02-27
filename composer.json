@@ -1,0 +1,26 @@
+{
+    "name": "swoyii",
+    "description": "Speed Up Yii With Swoole",
+    "keywords": ["yii2", "swoole"],
+    "homepage": "https://github.com/VincentYe123/swoyii",
+    "type": "project",
+    "license": "Apache-2.0",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.1.0",
+        "yidas/yii2-composer-bower-skip": "~2.0.0",
+        "yiisoft/yii2": "~2.0.14",
+        "yiisoft/yii2-redis": "~2.0.0",
+        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
+        "grpc/grpc": "^1.19",
+        "sizeg/yii2-jwt": "^1.0",
+        "guzzlehttp/guzzle": "~6.0",
+        "voku/anti-xss": "^4.1"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    ]
+}
