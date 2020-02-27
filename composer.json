@@ -15,7 +15,9 @@
         "grpc/grpc": "^1.19",
         "sizeg/yii2-jwt": "^1.0",
         "guzzlehttp/guzzle": "~6.0",
-        "voku/anti-xss": "^4.1"
+        "voku/anti-xss": "^4.1",
+        "hashids/hashids": "^4.0",
+        "ext-json": "*"
     },
     "repositories": [
         {
