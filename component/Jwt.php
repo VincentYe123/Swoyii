@@ -1,6 +1,6 @@
 <?php
 
-namespace app\components;
+namespace app\component;
 
 use Lcobucci\JWT\Token;
 use Yii;

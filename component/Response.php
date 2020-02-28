@@ -1,6 +1,6 @@
 <?php
 
-namespace app\components;
+namespace app\component;
 
 use swoole_http_response;
 use Yii;

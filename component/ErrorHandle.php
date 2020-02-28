@@ -6,11 +6,9 @@
  * @CreateTime 2018/7/20 17:25:54
  */
 
-namespace app\components;
+namespace app\component;
 
-use app\exceptions\BaseException;
-use app\exceptions\RequestException;
-use app\exceptions\ServiceExceptions;
+use app\exceptions\BaseException;;
 use Yii;
 use yii\base\ErrorException;
 use yii\base\ErrorHandler;
@@ -25,32 +23,32 @@ class ErrorHandle extends ErrorHandler
 
     public function renderException($exception)
     {
-        if ($exception instanceof BusinessException) {
-            $exception = new ServiceExceptions($exception->getCode());
-        }
+        //if ($exception instanceof BusinessException) {
+        //    $exception = new ServiceExceptions($exception->getCode());
+        //}
 
         $data['code'] = $exception->getCode();
         $data['msg'] = $exception->getMessage();
 
-        if ($exception instanceof BaseException) {
-            Yii::$app->response->setStatusCode($exception::getStatusCode($exception->getCode()));
-        } elseif ($exception instanceof NotFoundHttpException) {
-            Yii::$app->response->setStatusCode(404);
-            $data['code'] = RequestException::URI_ERR;
-            $data['msg'] = RequestException::getReason(RequestException::URI_ERR);
-        } elseif ($exception instanceof ForbiddenHttpException) {
-            $data['code'] = RequestException::PERMISSION_DENIED;
-            $data['msg'] = RequestException::getReason(RequestException::PERMISSION_DENIED);
-            Yii::$app->response->setStatusCode(403);
-        } elseif ($exception instanceof UnauthorizedHttpException) {
-            $data['code'] = RequestException::UNAUTHORIZED_TOKEN;
-            $data['msg'] = RequestException::getReason(RequestException::UNAUTHORIZED_TOKEN);
-            Yii::$app->response->setStatusCode(401);
-        } else {
-            Yii::$app->response->setStatusCode(500);
-            $data['code'] = BaseException::SYSTEM_ERR;
-            $data['msg'] = BaseException::getReason(BaseException::SYSTEM_ERR);
-        }
+        //if ($exception instanceof BaseException) {
+        //    Yii::$app->response->setStatusCode($exception::getStatusCode($exception->getCode()));
+        //} elseif ($exception instanceof NotFoundHttpException) {
+        //    Yii::$app->response->setStatusCode(404);
+        //    $data['code'] = RequestException::URI_ERR;
+        //    $data['msg'] = RequestException::getReason(RequestException::URI_ERR);
+        //} elseif ($exception instanceof ForbiddenHttpException) {
+        //    $data['code'] = RequestException::PERMISSION_DENIED;
+        //    $data['msg'] = RequestException::getReason(RequestException::PERMISSION_DENIED);
+        //    Yii::$app->response->setStatusCode(403);
+        //} elseif ($exception instanceof UnauthorizedHttpException) {
+        //    $data['code'] = RequestException::UNAUTHORIZED_TOKEN;
+        //    $data['msg'] = RequestException::getReason(RequestException::UNAUTHORIZED_TOKEN);
+        //    Yii::$app->response->setStatusCode(401);
+        //} else {
+        //    Yii::$app->response->setStatusCode(500);
+        //    $data['code'] = BaseException::SYSTEM_ERR;
+        //    $data['msg'] = BaseException::getReason(BaseException::SYSTEM_ERR);
+        //}
 
         if (YII_DEBUG) {
             $data['debug'] = $this->getInfo();

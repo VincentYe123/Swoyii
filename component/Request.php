@@ -1,6 +1,6 @@
 <?php
 
-namespace app\components;
+namespace app\component;
 
 use Yii;
 use yii\base\InvalidConfigException;

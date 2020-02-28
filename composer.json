@@ -1,13 +1,15 @@
 {
     "name": "swoyii",
     "description": "Speed Up Yii With Swoole",
-    "keywords": ["yii2", "swoole"],
+    "keywords": ["yii2", "swoole", "php"],
     "homepage": "https://github.com/VincentYe123/swoyii",
     "type": "project",
     "license": "Apache-2.0",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=7.1.0",
+        "ext-pdo": "*",
+        "ext-json": "*",
         "yidas/yii2-composer-bower-skip": "~2.0.0",
         "yiisoft/yii2": "~2.0.14",
         "yiisoft/yii2-redis": "~2.0.0",
@@ -16,8 +18,11 @@
         "sizeg/yii2-jwt": "^1.0",
         "guzzlehttp/guzzle": "~6.0",
         "voku/anti-xss": "^4.1",
-        "hashids/hashids": "^4.0",
-        "ext-json": "*"
+        "hashids/hashids": "^4.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master",
+        "eaglewu/swoole-ide-helper": "dev-master"
     },
     "repositories": [
         {

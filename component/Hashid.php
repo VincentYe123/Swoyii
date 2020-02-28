@@ -6,7 +6,7 @@
  * @CreateTime 2019-05-07 15:20:22
  */
 
-namespace app\components;
+namespace app\component;
 
 use app\exceptions\RequestException;
 use Hashids\Hashids;
@@ -33,7 +33,7 @@ class Hashid extends Hashids
      */
     public static function getInstance($key, $length): ?Hashids
     {
-        if (self::$instance === null) {
+        if (null === self::$instance) {
             self::$instance = new Hashids($key, $length);
         }
 

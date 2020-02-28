@@ -1,0 +1,48 @@
+#!/usr/bin/env php
+<?php
+
+use app\server\Http;
+
+$env = getenv('RUNTIME_ENV');
+if (!$env) {
+    $env = 'local';
+}
+
+if (!isset($argv[1])) {
+    echo 'Usage  : ./swoyii [start | stop | reload]';
+
+    return;
+}
+
+switch ($argv[1]) {
+    case 'start':
+        break;
+    case 'stop':
+        stop();
+
+        return;
+    case 'reload':
+        stop();
+        break;
+}
+
+$configPath = __DIR__.'/../config/'.$env;
+
+require $configPath.'/core.php';
+require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../vendor/yiisoft/yii2/Yii.php';
+require __DIR__.'/../server/Application.php';
+require __DIR__.'/../server/Http.php';
+
+$appConf = require $configPath.'/web.php';
+$swConf = require $configPath.'/server.php';
+
+//todo::支持更多协议
+(new Http($swConf, $appConf))->run();
+
+function stop()
+{
+    $pidPath = __DIR__.'/server.pid';
+    $cmd = "cat {$pidPath} | xargs kill -9 ";
+    system($cmd);
+}

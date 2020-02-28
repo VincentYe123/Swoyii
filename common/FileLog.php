@@ -1,6 +1,6 @@
 <?php
 
-namespace app\components;
+namespace app\common;
 
 use yii\base\Exception;
 use yii\helpers\FileHelper;

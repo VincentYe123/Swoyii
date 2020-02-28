@@ -1,8 +1,9 @@
 <?php
 
-namespace app\components;
+namespace app\component;
 
 use swoole_http_server;
+use Yii;
 use yii\base\Component;
 
 class Sw extends Component
@@ -26,7 +27,7 @@ class Sw extends Component
      */
     public function task(...$paramArr)
     {
-        $paramArr[] = \Yii::$app->request->headers['x-request-id'] ?: md5(time());
+        $paramArr[] = Yii::$app->request->headers['x-request-id'] ?: md5(time());
         $this->_swServer->task($paramArr);
     }
 
