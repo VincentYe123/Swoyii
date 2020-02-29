@@ -1,15 +1,13 @@
 #!/usr/bin/env php
 <?php
 
-use app\server\Http;
-
 $env = getenv('RUNTIME_ENV');
 if (!$env) {
     $env = 'local';
 }
 
 if (!isset($argv[1])) {
-    echo 'Usage  : ./swoyii [start | stop | reload]';
+    echo "\e[1mCommands are available: [start | stop | reload]\e[0m".PHP_EOL;
 
     return;
 }
@@ -38,7 +36,7 @@ $appConf = require $configPath.'/web.php';
 $swConf = require $configPath.'/server.php';
 
 //todo::支持更多协议
-(new Http($swConf, $appConf))->run();
+(new app\server\Http($swConf, $appConf))->run();
 
 function stop()
 {

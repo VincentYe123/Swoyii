@@ -1,6 +1,6 @@
 <?php
 
-namespace app\component;
+namespace app\middleware;
 
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;

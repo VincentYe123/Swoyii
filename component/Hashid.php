@@ -1,14 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- *
- * @Author: sunqiang@styd.cn
- * @CreateTime 2019-05-07 15:20:22
- */
 
 namespace app\component;
 
-use app\exceptions\RequestException;
+use app\exception\RequestException;
 use Hashids\Hashids;
 use Yii;
 
@@ -20,24 +14,12 @@ class Hashid extends Hashids
     //hash后id长度
     public $length;
 
+    /** @var Hashids */
     private static $instance = null;
 
-    /**
-     * 获取单例方法.
-     *
-     * @param $key
-     * @param $length
-     *
-     * @return Hashids|null
-     * @CreateTime 2019-05-07 15:49:40
-     */
-    public static function getInstance($key, $length): ?Hashids
+    public function init()
     {
-        if (null === self::$instance) {
-            self::$instance = new Hashids($key, $length);
-        }
-
-        return self::$instance;
+        self::$instance = new Hashids($this->key, $this->length);
     }
 
     /**
@@ -48,11 +30,10 @@ class Hashid extends Hashids
      * @return string
      *
      * @throws RequestException
-     * @CreateTime 2019-05-07 15:49:32
      */
     public function encodeId(...$numbers): string
     {
-        $idStr = self::getInstance($this->key, $this->length)::encode($numbers);
+        $idStr = self::$instance->encode($numbers);
         if (empty($idStr)) {
             Yii::error('encode id error, input numbers is '.implode('-', $numbers));
             throw new RequestException(RequestException::INVALID_PARAM);
@@ -69,11 +50,10 @@ class Hashid extends Hashids
      * @return mixed
      *
      * @throws RequestException
-     * @CreateTime 2019-05-07 17:03:17
      */
     public function decodeId($hash)
     {
-        $ids = self::getInstance($this->key, $this->length)->decode($hash);
+        $ids = self::$instance->decode($hash);
         if (empty($ids)) {
             throw new RequestException(RequestException::INVALID_PARAM);
         }
@@ -93,7 +73,7 @@ class Hashid extends Hashids
      */
     public function decodeIds($hash): array
     {
-        $ids = self::getInstance($this->key, $this->length)->decode($hash);
+        $ids = self::$instance->decode($hash);
 
         if (empty($ids)) {
             throw new RequestException(RequestException::INVALID_PARAM);

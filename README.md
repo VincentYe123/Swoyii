@@ -25,7 +25,8 @@
 │   ├── controller/
 │   └── service/
 ├── public/                ----- 公共目录
-├── resource/              ----- 应用资源目录
+├── resource/              ----- 资源目录
+    ├── template/
 │   └── language/
 ├── routes/                ----- 路由文件目录
 ├── rules/                 ----- 规则文件目录
@@ -36,7 +37,7 @@
 └── yii
 ```
 
-###快速启动
+### 快速启动
 - 安装Vendor
 ```
 $> composer install

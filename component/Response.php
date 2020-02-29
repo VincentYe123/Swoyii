@@ -2,23 +2,22 @@
 
 namespace app\component;
 
-use swoole_http_response;
 use Yii;
 use yii\db\Exception;
 
 class Response extends \yii\web\Response
 {
     /**
-     * @var swoole_http_response
+     * @var \Swoole\Http\Response
      */
     private $_swResponse;
 
-    public function setSwResponse(swoole_http_response $response): void
+    public function setSwResponse(\Swoole\Http\Response $response): void
     {
         $this->_swResponse = $response;
     }
 
-    public function getSwResponse(): swoole_http_response
+    public function getSwResponse(): \Swoole\Http\Response
     {
         return $this->_swResponse;
     }
@@ -50,7 +49,7 @@ class Response extends \yii\web\Response
                     $chunkSize = $end - $pos + 1;
                 }
                 $this->_swResponse->write(fread($handle, $chunkSize));
-                //flush(); // Free up memory. Otherwise large files will trigger PHP's memory limit.
+                //flush(); // Free up memory. Otherwise large files will trigger php's memory limit.
             }
             fclose($handle);
         } else {

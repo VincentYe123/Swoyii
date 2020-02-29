@@ -22,12 +22,7 @@ class Application extends \yii\web\Application
         }
     }
 
-    /**
-     * @return int
-     * @CreateTime 2020/2/28 10:34:02
-     * @Author     : yechangqing@styd.cn
-     */
-    public function run(): int
+    public function run()
     {
         try {
             $this->state = self::STATE_BEFORE_REQUEST;

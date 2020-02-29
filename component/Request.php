@@ -11,30 +11,16 @@ class Request extends \yii\web\Request
 
     private $_startTime;
 
-    /**
-     * @param $request
-     *
-     * @CreateTime 2018-12-26 14:17:36
-     */
     public function setSwRequest($request): void
     {
         $this->_swRequest = $request;
     }
 
-    /**
-     * @return mixed
-     * @CreateTime 2018-12-26 14:17:39
-     */
     public function getSwRequest()
     {
         return $this->_swRequest;
     }
 
-    /**
-     * @param $time
-     *
-     * @CreateTime 2018-12-26 14:17:43
-     */
     public function setStartTime($time): void
     {
         $this->_startTime = $time;
@@ -49,7 +35,6 @@ class Request extends \yii\web\Request
      * @return array
      *
      * @throws InvalidConfigException
-     * @CreateTime 2018-12-17 10:39:11
      */
     public function getInfo(): array
     {
@@ -66,7 +51,6 @@ class Request extends \yii\web\Request
      * @return string
      *
      * @throws InvalidConfigException
-     * @CreateTime 2018-12-17 10:39:17
      */
     public function getExUniqueId(): string
     {

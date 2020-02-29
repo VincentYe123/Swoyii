@@ -1,7 +1,5 @@
 <?php
 
-use app\components\Sw;
-
 /**
  * 组件提示,无任何实际功能
  * Class Yii.
@@ -20,11 +18,21 @@ class Yii
  */
 class MyApplication
 {
-    /** components redis */
     /** @var yii\redis\Connection */
     public $redis;
 
-    /** components sw */
-    /** @var Sw */
+    /** @var app\component\Sw */
     public $sw;
+
+    /** @var voku\helper\AntiXSS */
+    public $sanitizer;
+
+    /** @var app\component\Hashid */
+    public $hashid;
+
+    /** @var app\component\Jwt */
+    public $jwt;
+
+    /** @var app\component\PasswordHash */
+    public $phpass;
 }

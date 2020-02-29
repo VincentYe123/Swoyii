@@ -5,9 +5,8 @@ namespace app\common;
 use yii\base\Exception;
 use yii\helpers\FileHelper;
 
-//swoole_asyn_writefile use aio base mode, default 2 thread to write file.
 //it flock file automatically when write file.
-class FileLog extends \yii\log\FileTarget
+class FileTarget extends \yii\log\FileTarget
 {
     public $logDir;
 
@@ -31,13 +30,11 @@ class FileLog extends \yii\log\FileTarget
         if ($this->enableRotation) {
             clearstatcache();
         }
-        if ($this->enableRotation && @filesize($this->logFile) > $this->maxFileSize * 1024) {
-            //don't uncomment this line, it will cause rotate bug when concurrent write log
-            //$this->rotateFiles();
-            swoole_async_writefile($this->logFile, $text, null, FILE_APPEND);
-        } else {
-            swoole_async_writefile($this->logFile, $text, null, FILE_APPEND);
-        }
+
+        go(function () use ($text) {
+            file_put_contents($this->logFile, $text, FILE_APPEND);
+        });
+
         if (null !== $this->fileMode) {
             @chmod($this->logFile, $this->fileMode);
         }

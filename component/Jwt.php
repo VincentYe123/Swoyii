@@ -10,7 +10,6 @@ use yii\base\Exception;
 class Jwt extends \sizeg\jwt\Jwt
 {
     public $key;
-    //过期时间优先取core.php JWT_DURATION
     public $expTime = 3600 * 24 * 7;
 
     /**
@@ -19,7 +18,6 @@ class Jwt extends \sizeg\jwt\Jwt
      * @return Token
      *
      * @throws Exception
-     * @CreateTime 2018-12-17 10:38:55
      */
     public function issue($privatePayloads = []): Token
     {

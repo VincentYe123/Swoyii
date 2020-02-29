@@ -2,9 +2,8 @@
 
 namespace app\server;
 
-use swoole_http_request;
-use swoole_http_server;
-use swoole_server;
+use Swoole\Http\Request;
+use Swoole\Http\Server;
 use Yii;
 use yii\base\InvalidConfigException;
 
@@ -14,12 +13,6 @@ class Http
     private $_swConf;
     private $_appConf;
 
-    /**
-     * Http constructor.
-     *
-     * @param $swConf
-     * @param $appConf
-     */
     public function __construct($swConf, $appConf)
     {
         $this->_swConf = $swConf;
@@ -31,7 +24,7 @@ class Http
      */
     public function run()
     {
-        $this->_http = new swoole_http_server($this->_swConf['ip'], $this->_swConf['port']);
+        $this->_http = new Server($this->_swConf['ip'], $this->_swConf['port']);
         $this->_http->on('start', [$this, 'onStart']);
         $this->_http->on('WorkerStart', [$this, 'onWorkerStart']);
         $this->_http->on('request', [$this, 'onRequest']);
@@ -46,12 +39,7 @@ class Http
         $this->_http->start();
     }
 
-    /**
-     * @param $server
-     *
-     * @CreateTime 2018-12-06 20:07:33
-     */
-    public function onStart(swoole_server $server)
+    public function onStart(Server $server)
     {
         $this->startInfo();
         $date = date('Y-m-d H:i:s');
@@ -59,14 +47,12 @@ class Http
     }
 
     /**
-     * @param $server
-     * @param $workerId
-     *
-     * @CreateTime 2018-12-17 09:55:35
+     * @param Server $server
+     * @param        $workerId
      *
      * @throws InvalidConfigException
      */
-    public function onWorkerStart(swoole_server $server, $workerId)
+    public function onWorkerStart(Server $server, $workerId)
     {
         $workName = 'Worker';
         $date = date('Y-m-d H:i:s');
@@ -82,19 +68,13 @@ class Http
         Yii::$app->sw->setSwServer($server);
     }
 
-    /**
-     * @param $request
-     * @param $response
-     *
-     * @CreateTime 2018-12-17 10:16:54
-     */
-    public function onRequest($request, $response)
+    public function onRequest(Request $request, $response)
     {
         $this->setAppRunEnv($request, $response);
         Yii::$app->run();
     }
 
-    public function onTask(swoole_server $server, $taskId, $srcWorkerId, $data)
+    public function onTask(Server $server, $taskId, $srcWorkerId, $data)
     {
         $date = date('Y-m-d H:i:s');
         try {
@@ -111,7 +91,7 @@ class Http
         }
     }
 
-    public function onFinish(swoole_server $server, $taskId, $data)
+    public function onFinish(Server $server, $taskId, $data)
     {
         $date = date('Y-m-d H:i:s');
         echo "[info] {$date} Task Worker #{$taskId} Finish.".PHP_EOL;
@@ -123,19 +103,13 @@ class Http
      *
      * @CreateTime 2018-12-17 09:55:35
      */
-    public function onWorkerStop(swoole_server $server, $workerId)
+    public function onWorkerStop(Server $server, $workerId)
     {
         $date = date('Y-m-d H:i:s');
         echo "[info] {$date} Worker #{$workerId} stop #{$workerId}".PHP_EOL;
     }
 
-    /**
-     * Set app run env.
-     *
-     * @param $request
-     * @param $response
-     */
-    public function setAppRunEnv(swoole_http_request $request, $response)
+    public function setAppRunEnv(Request $request, $response)
     {
         Yii::$app->request->clear();
         Yii::$app->response->clear();
