@@ -8,8 +8,9 @@ use yii\db\Exception;
 
 class DbKeepAlive extends Command
 {
+
     /**
-     * @param null $forRead
+     * @param bool $forRead
      * @param int  $retry
      *
      * @throws Exception

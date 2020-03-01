@@ -17,7 +17,7 @@ class Hashid extends Hashids
     /** @var Hashids */
     private static $instance = null;
 
-    public function init()
+    public function init(): void
     {
         self::$instance = new Hashids($this->key, $this->length);
     }

@@ -29,7 +29,7 @@ class HelloController extends Controller
      *
      * @return int Exit code
      */
-    public function actionIndex($message = 'hello world')
+    public function actionIndex(string $message = 'hello world'): int
     {
         echo $message."\n";
 

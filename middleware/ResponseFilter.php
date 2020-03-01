@@ -11,7 +11,7 @@ class ResponseFilter extends ResponseInterface
 
     public $successMsg = 'success';
 
-    public function beforeSend($response)
+    public function beforeSend($response): void
     {
         $data = $response->data;
 

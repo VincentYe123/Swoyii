@@ -54,7 +54,7 @@ class PasswordHash
         }
     }
 
-    private function getRandomBytes($count)
+    private function getRandomBytes($count): string
     {
         $output = '';
         if (
@@ -78,7 +78,7 @@ class PasswordHash
         return $output;
     }
 
-    private function encode64($input, $count)
+    private function encode64($input, $count): string
     {
         $output = '';
         $i = 0;
@@ -105,7 +105,7 @@ class PasswordHash
         return $output;
     }
 
-    private function gensaltPrivate($input)
+    private function gensaltPrivate($input): string
     {
         $output = '$P$';
         $output .= $this->itoa64[min($this->iterationCountLog2 +
@@ -115,7 +115,7 @@ class PasswordHash
         return $output;
     }
 
-    private function cryptPrivate($password, $setting)
+    private function cryptPrivate($password, $setting): string
     {
         $output = '*0';
         if (substr($setting, 0, 2) === $output) {
@@ -157,7 +157,7 @@ class PasswordHash
         return $output;
     }
 
-    private function gensaltBlowfish($input)
+    private function gensaltBlowfish($input): string
     {
         // This one needs to use a different order of characters and a
         // different encoding scheme from the one in encode64() above.
@@ -198,7 +198,7 @@ class PasswordHash
         return $output;
     }
 
-    public function HashPassword($password)
+    public function HashPassword($password): string
     {
         $random = '';
 
@@ -225,7 +225,7 @@ class PasswordHash
         return '*';
     }
 
-    public function CheckPassword($password, $stored_hash)
+    public function CheckPassword($password, $stored_hash): bool
     {
         $hash = $this->cryptPrivate($password, $stored_hash);
         if (0 === strpos($hash, '*')) {

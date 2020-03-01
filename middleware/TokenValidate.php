@@ -18,7 +18,7 @@ class TokenValidate extends RequestInterface
      * @throws RequestException
      * @throws Throwable
      */
-    public function beforeAction($request)
+    public function beforeAction($request): bool
     {
         $token = $request->getHeaders()->get('Token');
         /**
@@ -37,7 +37,7 @@ class TokenValidate extends RequestInterface
     /**
      * @throws RequestException
      */
-    public function handleFailure()
+    public function handleFailure(): void
     {
         throw new RequestException(RequestException::UNAUTHORIZED_TOKEN);
     }

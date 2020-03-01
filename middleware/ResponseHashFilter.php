@@ -29,7 +29,7 @@ class ResponseHashFilter extends ResponseInterface
      *
      * @throws RequestException
      */
-    public function encodeColumn($data)
+    public function encodeColumn($data): array
     {
         if (!is_array($data)) {
             return $data;
@@ -40,7 +40,7 @@ class ResponseHashFilter extends ResponseInterface
                 $data[$key] = $this->encodeColumn($value);
             }
 
-            if (in_array($key, Yii::$app->params['hashColumn'], true)) {
+            if (in_array($key, Yii::$app->params['responseHashFilter']['hashColumn'], true)) {
                 $data[$key] = Yii::$app->hashid->encodeId($value);
             }
         }

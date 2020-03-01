@@ -22,9 +22,7 @@
 │   ├── dao/
 │   └── entity/
 ├── module/                ----- 功能模块目录
-│   ├── controller/
-│   └── service/
-├── public/                ----- 公共目录
+├── params/                ----- 公告参数目录
 ├── resource/              ----- 资源目录
     ├── template/
 │   └── language/

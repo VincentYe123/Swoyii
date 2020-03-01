@@ -7,14 +7,14 @@ use Yii;
 
 abstract class ResponseInterface extends BaseMiddleware
 {
-    public function events()
+    public function events(): array
     {
         return [
             Response::EVENT_BEFORE_SEND => 'eventBeforeSend',
         ];
     }
 
-    public function eventBeforeSend()
+    public function eventBeforeSend(): void
     {
         if (!$this->isActive()) {
             $info = Yii::$app->request->getInfo();

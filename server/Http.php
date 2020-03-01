@@ -22,7 +22,7 @@ class Http
     /**
      * Main func.
      */
-    public function run()
+    public function run(): void
     {
         $this->_http = new Server($this->_swConf['ip'], $this->_swConf['port']);
         $this->_http->on('start', [$this, 'onStart']);
@@ -39,7 +39,7 @@ class Http
         $this->_http->start();
     }
 
-    public function onStart(Server $server)
+    public function onStart(Server $server): void
     {
         $this->startInfo();
         $date = date('Y-m-d H:i:s');
@@ -52,7 +52,7 @@ class Http
      *
      * @throws InvalidConfigException
      */
-    public function onWorkerStart(Server $server, $workerId)
+    public function onWorkerStart(Server $server, $workerId): void
     {
         $workName = 'Worker';
         $date = date('Y-m-d H:i:s');
@@ -66,13 +66,13 @@ class Http
         Yii::$app->sw->setSwServer($server);
     }
 
-    public function onRequest(Request $request, $response)
+    public function onRequest(Request $request, $response): void
     {
         $this->setAppRunEnv($request, $response);
         Yii::$app->run();
     }
 
-    public function onTask(Server $server, $taskId, $srcWorkerId, $data)
+    public function onTask(Server $server, $taskId, $srcWorkerId, $data): void
     {
         $date = date('Y-m-d H:i:s');
         try {
@@ -89,7 +89,7 @@ class Http
         }
     }
 
-    public function onFinish(Server $server, $taskId, $data)
+    public function onFinish(Server $server, $taskId, $data): void
     {
         $date = date('Y-m-d H:i:s');
         echo "[info] {$date} Task Worker #{$taskId} Finish.".PHP_EOL;
@@ -101,13 +101,13 @@ class Http
      *
      * @CreateTime 2018-12-17 09:55:35
      */
-    public function onWorkerStop(Server $server, $workerId)
+    public function onWorkerStop(Server $server, $workerId): void
     {
         $date = date('Y-m-d H:i:s');
         echo "[info] {$date} Worker #{$workerId} stop #{$workerId}".PHP_EOL;
     }
 
-    public function setAppRunEnv(Request $request, $response)
+    public function setAppRunEnv(Request $request, $response): void
     {
         Yii::$app->request->clear();
         Yii::$app->response->clear();
@@ -136,7 +136,7 @@ class Http
         Yii::$app->request->setStartTime(microtime(true));
     }
 
-    public function startInfo()
+    public function startInfo(): void
     {
         $appName = APP_NAME;
         $osName = PHP_OS;

@@ -15,7 +15,7 @@ class RequestException extends BaseException
 
     public static $reasons
         = [
-            self::URI_ERR => 'uri not exist',
+            self::URI_ERR => '路由不存在',
             self::PERMISSION_DENIED => '无操作权限',
             self::INVALID_SIGNATURE => '签名异常',
             self::INVALID_PARAM => '参数不合法',

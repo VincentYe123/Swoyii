@@ -16,7 +16,7 @@ class ErrorHandle extends ErrorHandler
 {
     public const EVENT_BEFORE_ERROR = 'beforeError';
 
-    public function renderException($exception)
+    public function renderException($exception): void
     {
         $data['code'] = $exception->getCode();
         $data['msg'] = $exception->getMessage();
@@ -56,7 +56,7 @@ class ErrorHandle extends ErrorHandler
         Yii::$app->response->send();
     }
 
-    public function getInfo()
+    public function getInfo(): array
     {
         return [
             'request_info' => Yii::$app->request->getInfo(),
@@ -68,7 +68,7 @@ class ErrorHandle extends ErrorHandler
         ];
     }
 
-    public function handleException($exception)
+    public function handleException($exception): void
     {
         $this->exception = $exception;
         try {
@@ -86,7 +86,7 @@ class ErrorHandle extends ErrorHandler
         $this->exception = null;
     }
 
-    public function handleError($code, $message, $file, $line)
+    public function handleError($code, $message, $file, $line): bool
     {
         if (error_reporting() & $code) {
             if (!class_exists('yii\\base\\ErrorException', false)) {
@@ -108,7 +108,7 @@ class ErrorHandle extends ErrorHandler
         return false;
     }
 
-    public function handleFatalError()
+    public function handleFatalError(): void
     {
         if (!class_exists('yii\\base\\ErrorException', false)) {
             require_once Yii::getAlias('@yii/base/ErrorException.php');
@@ -131,7 +131,7 @@ class ErrorHandle extends ErrorHandler
         }
     }
 
-    public function handleFallbackExceptionMessage($exception, $previousException)
+    public function handleFallbackExceptionMessage($exception, $previousException): void
     {
         $msg = "An Error occurred while handling another error:\n";
         $msg .= (string) $exception;

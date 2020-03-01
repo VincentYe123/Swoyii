@@ -35,12 +35,7 @@ class BaseMiddleware extends Behavior
      */
     public $except = [];
 
-    /**
-     * @return bool
-     * @CreateTime 2019-04-19 14:03:13
-     * @Author     : xingxiaohe@styd.cn
-     */
-    public function isActive()
+    public function isActive(): bool
     {
         $id = Yii::$app->requestedRoute;
         if (empty($id)) {

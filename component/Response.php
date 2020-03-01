@@ -32,7 +32,7 @@ class Response extends \yii\web\Response
         }
     }
 
-    public function sendContent()
+    public function sendContent(): void
     {
         if (null === $this->stream) {
             $this->_swResponse->end($this->content);
@@ -63,7 +63,7 @@ class Response extends \yii\web\Response
         $this->checkServerException();
     }
 
-    public function sendHeaders()
+    public function sendHeaders(): void
     {
         $headers = $this->getHeaders();
         if ($headers->count > 0) {
@@ -76,7 +76,7 @@ class Response extends \yii\web\Response
         $this->_swResponse->status($this->getStatusCode());
     }
 
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $_POST = [];

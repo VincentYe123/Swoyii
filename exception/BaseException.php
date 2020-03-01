@@ -20,7 +20,7 @@ class BaseException extends Exception
     public static $reasons
         = [
             self::SYSTEM_ERR => '系统繁忙，请稍后重试',
-            self::DATA_ADD_ERROR => '数据添加或更新失败',
+            self::DATA_ADD_ERROR => '数据添加/更新失败',
             self::DATA_SHOW_ERROR => '无查询数据',
             self::FORBIDDEN_CODE => '无操作权限',
             self::UNAUTHORIZED_CODE => '登录态失效，请重新登录',
@@ -38,12 +38,12 @@ class BaseException extends Exception
         $this->message = $message ?: self::getReason($code);
     }
 
-    public static function getReason($code)
+    public static function getReason($code): string
     {
         return static::$reasons[$code] ?: self::$reasons[self::SYSTEM_ERR];
     }
 
-    public static function getStatusCode($code)
+    public static function getStatusCode($code): int
     {
         return static::$statusCode[$code] ?: self::BAD_REQUEST_CODE;
     }

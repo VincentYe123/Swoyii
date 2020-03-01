@@ -8,6 +8,7 @@ use app\component\Request;
 use app\component\Response;
 use app\component\Sw;
 use app\middleware\ResponseFilter;
+use app\middleware\ResponseHashFilter;
 use app\middleware\ResponseLog;
 use voku\helper\AntiXSS;
 use yii\web\JsonParser;
@@ -16,8 +17,8 @@ use yii\caching\FileCache;
 $db = require __DIR__.'/db.php';
 $log = require __DIR__.'/log.php';
 $redis = require __DIR__.'/redis.php';
-$params = require __DIR__.'/params.php';
-$route = require __DIR__.'/../../params/route.php';
+$params = require __DIR__.'/../../params/params.php';
+$routes = require __DIR__.'/../../routes/routes.php';
 
 return [
     'id' => APP_ID,
@@ -25,8 +26,8 @@ return [
     'basePath' => dirname(__DIR__).'/../',
     'bootstrap' => ['log'],
     'modules' => [
-        'v1' => [
-            'class' => app\module\v1\V1Mod::class,
+        'demo' => [
+            'class' => app\module\demo\demoMod::class,
         ],
     ],
     'components' => [
@@ -34,7 +35,7 @@ return [
             'enablePrettyUrl' => true,
             'enableStrictParsing' => true,
             'showScriptName' => false,
-            'rules' => $route,
+            'rules' => $routes,
         ],
         'errorHandler' => [
             'class' => ErrorHandle::class,
@@ -45,6 +46,8 @@ return [
             'enableCsrfValidation' => false,
             'parsers' => [
                 'application/json' => JsonParser::class,
+                //解析xml
+                //'text/xml' => XmlParser::class,
             ],
         ],
         'response' => [
@@ -52,13 +55,18 @@ return [
             'format' => \yii\web\Response::FORMAT_JSON,
             'as log' => [
                 'class' => ResponseLog::class,
-                'except' => [],
-                'only' => [],
+                'except' => $params['responseLog']['except'],
+                'only' => $params['responseLog']['only'],
             ],
             'as filter' => [
                 'class' => ResponseFilter::class,
-                'except' => [],
-                'only' => [],
+                'except' => $params['responseFilter']['except'],
+                'only' => $params['responseFilter']['only'],
+            ],
+            'as hashfilter' => [
+                'class' => ResponseHashFilter::class,
+                'except' => $params['responseHashFilter']['except'],
+                'only' => $params['responseHashFilter']['only'],
             ],
         ],
         'sanitizer' => [

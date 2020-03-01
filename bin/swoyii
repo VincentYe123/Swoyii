@@ -59,7 +59,7 @@ $swConf = require $configPath.'/server.php';
 $className = 'app\server\\'.$serverName;
 (new $className($swConf, $appConf))->run();
 
-function stop()
+function stop(): void
 {
     $pidPath = __DIR__.'/server.pid';
     $cmd = "cat {$pidPath} | xargs kill -9 ";

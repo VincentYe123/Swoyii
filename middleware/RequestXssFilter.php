@@ -1,9 +1,8 @@
 <?php
 
-namespace app\behaviors;
+namespace app\middleware;
 
 use app\component\Request;
-use app\middleware\RequestInterface;
 use Yii;
 use yii\base\InvalidConfigException;
 
@@ -21,7 +20,7 @@ class RequestXssFilter extends RequestInterface
      *
      * @throws InvalidConfigException
      */
-    public function beforeAction($request)
+    public function beforeAction($request): void
     {
         $cleanQueryParams = $this->xssCleaner($request->getQueryParams());
         $cleanBodyParams = $this->xssCleaner($request->getBodyParams());
@@ -57,7 +56,7 @@ class RequestXssFilter extends RequestInterface
      *
      * @return string
      */
-    public function cleanReqVal($reqVal)
+    public function cleanReqVal($reqVal): string
     {
         return Yii::$app->sanitizer->xss_clean($reqVal);
     }

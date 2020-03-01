@@ -40,7 +40,7 @@ class XmlParser implements RequestParserInterface
      *
      * @throws BadRequestHttpException if the body contains invalid xml and [[throwException]] is `true`
      */
-    public function parse($rawBody, $contentType)
+    public function parse($rawBody, $contentType): array
     {
         try {
             libxml_use_internal_errors(true);

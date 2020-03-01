@@ -64,7 +64,7 @@ class ParamsValidate extends RequestInterface
 
     private $_validateKey = [];
 
-    public function init()
+    public function init(): void
     {
         if (!is_callable($this->errFunc)) {
             $this->errFunc = static function ($data) {
@@ -78,7 +78,7 @@ class ParamsValidate extends RequestInterface
      *
      * @throws InvalidConfigException
      */
-    public function beforeAction($request)
+    public function beforeAction($request): void
     {
         $url = rtrim(Yii::$app->controller->action->getUniqueId(), '/');
         $rules = array_merge(ArrayHelper::getValue($this->rules, '*', []), ArrayHelper::getValue($this->rules, $url, []));
@@ -91,7 +91,7 @@ class ParamsValidate extends RequestInterface
         }
     }
 
-    public function setValidateKey($rules)
+    public function setValidateKey($rules): void
     {
         foreach ($rules as $rule) {
             if (is_array($rule[0])) {
@@ -105,7 +105,7 @@ class ParamsValidate extends RequestInterface
         }
     }
 
-    public function setValidateVal($post)
+    public function setValidateVal($post): void
     {
         foreach ($this->_validateKey as $k => $v) {
             if (isset($post[$k])) {

@@ -8,7 +8,7 @@ use yii\log\Target;
 //把日志打印到stdout
 class StdoutTarget extends Target
 {
-    public function export()
+    public function export(): void
     {
         $file = @fopen('php://stdout', 'wb');
         if (false === $file) {

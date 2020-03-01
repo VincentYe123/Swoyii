@@ -13,7 +13,7 @@ class Sw extends Component
      */
     public $_swServer;
 
-    public function setSwServer(Server $server)
+    public function setSwServer(Server $server): void
     {
         $this->_swServer = $server;
     }
@@ -24,7 +24,7 @@ class Sw extends Component
         $this->_swServer->task($paramArr);
     }
 
-    public function stop()
+    public function stop(): void
     {
         $this->_swServer->stop();
     }
