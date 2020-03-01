@@ -1,21 +1,38 @@
 <?php
 
+use app\common\StdoutTarget;
+use app\component\ErrorHandle;
+use yii\gii\Module;
+use yii\caching\FileCache;
+
 $params = require __DIR__.'/params.php';
 $db = require __DIR__.'/db.php';
 
 $config = [
     'id' => 'swoyii-console',
     'basePath' => dirname(__DIR__).'/../',
+    'controllerNamespace' => 'app\command',
     'bootstrap' => ['log'],
     'components' => [
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+            'class' => FileCache::class,
+        ],
+        'errorHandler' => [
+            'class' => ErrorHandle::class,
         ],
         'log' => [
+            'flushInterval' => 1,
             'targets' => [
                 [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'class' => StdoutTarget::class,
+                    'categories' => ['application'],
+                    'exportInterval' => 1,
+                    'logVars' => [],
+                    'levels' => [
+                        'info',
+                        'warning',
+                        'error',
+                    ],
                 ],
             ],
         ],
@@ -26,9 +43,9 @@ $config = [
 
 if (YII_ENV === 'local') {
     // configuration adjustments for 'dev' environment
-    //$config['bootstrap'][] = 'gii';
+    $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
+        'class' => Module::class,
     ];
 }
 

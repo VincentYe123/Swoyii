@@ -3,17 +3,17 @@
 namespace app\module\v1;
 
 /**
- * user module definition class
+ * user module definition class.
  */
 class V1Mod extends \yii\base\Module
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    public $controllerNamespace = 'app\modules\v1\controllers';
+    public $controllerNamespace = 'app\module\v1\controller';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {

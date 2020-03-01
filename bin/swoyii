@@ -3,16 +3,16 @@
 
 $env = getenv('RUNTIME_ENV');
 if (!$env) {
-    $env = 'local';
+    $env = 'dev';
 }
 
 if (!isset($argv[1])) {
-    echo "\e[1mCommands are available: [start | stop | reload]\e[0m".PHP_EOL;
-
-    return;
+    $commandName = 'start';
+} else {
+    $commandName = strtolower($argv[1]);
 }
 
-switch ($argv[1]) {
+switch ($commandName) {
     case 'start':
         break;
     case 'stop':
@@ -22,6 +22,26 @@ switch ($argv[1]) {
     case 'reload':
         stop();
         break;
+    default:
+        echo "\e[1mCommands are available: [start | stop | reload]\e[0m".PHP_EOL;
+
+        return;
+}
+
+if (!isset($argv[2])) {
+    $serverName = 'http';
+} else {
+    $serverName = strtolower($argv[2]);
+}
+
+switch ($serverName) {
+    case 'http':
+        $serverName = ucfirst($serverName);
+        break;
+    default:
+        echo "\e[1mServer are available: [http]\e[0m".PHP_EOL;
+
+        return;
 }
 
 $configPath = __DIR__.'/../config/'.$env;
@@ -30,13 +50,14 @@ require $configPath.'/core.php';
 require __DIR__.'/../vendor/autoload.php';
 require __DIR__.'/../vendor/yiisoft/yii2/Yii.php';
 require __DIR__.'/../server/Application.php';
-require __DIR__.'/../server/Http.php';
+require __DIR__.'/../server/'.$serverName.'.php';
 
 $appConf = require $configPath.'/web.php';
 $swConf = require $configPath.'/server.php';
 
 //todo::支持更多协议
-(new app\server\Http($swConf, $appConf))->run();
+$className = 'app\server\\'.$serverName;
+(new $className($swConf, $appConf))->run();
 
 function stop()
 {

@@ -62,8 +62,6 @@ class Http
         }
         echo "[info] {$date} {$workName} #{$workerId} Start ".PHP_EOL;
 
-        //Grpc扩展与swoole扩展有冲突, Grpc扩展必须在运行时动态加载, 不能在配置文件中直接启用
-        //dl('grpc.so');
         new Application($this->_appConf);
         Yii::$app->sw->setSwServer($server);
     }

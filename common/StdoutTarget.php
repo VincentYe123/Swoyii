@@ -3,9 +3,10 @@
 namespace app\common;
 
 use yii\log\Logger;
+use yii\log\Target;
 
 //把日志打印到stdout
-class StdoutTarget extends \yii\log\Target
+class StdoutTarget extends Target
 {
     public function export()
     {

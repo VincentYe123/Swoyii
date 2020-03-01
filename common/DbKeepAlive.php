@@ -3,9 +3,10 @@
 namespace app\common;
 
 use yii\base\NotSupportedException;
+use yii\db\Command;
 use yii\db\Exception;
 
-class DbKeepAlive extends \yii\db\Command
+class DbKeepAlive extends Command
 {
     /**
      * @param null $forRead

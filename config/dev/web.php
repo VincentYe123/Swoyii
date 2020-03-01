@@ -1,75 +1,91 @@
 <?php
 
-$params = require __DIR__ . '/params.php';
-$db = require __DIR__ . '/db.php';
+use app\component\ErrorHandle;
+use app\component\Hashid;
+use app\component\Jwt;
+use app\component\PasswordHash;
+use app\component\Request;
+use app\component\Response;
+use app\component\Sw;
+use app\middleware\ResponseFilter;
+use app\middleware\ResponseLog;
+use voku\helper\AntiXSS;
+use yii\web\JsonParser;
+use yii\caching\FileCache;
 
-$config = [
-    'id' => 'basic',
-    'basePath' => dirname(__DIR__),
+$db = require __DIR__.'/db.php';
+$log = require __DIR__.'/log.php';
+$redis = require __DIR__.'/redis.php';
+$params = require __DIR__.'/params.php';
+$route = require __DIR__.'/../../params/route.php';
+
+return [
+    'id' => APP_ID,
+    'name' => APP_NAME,
+    'basePath' => dirname(__DIR__).'/../',
     'bootstrap' => ['log'],
-    'aliases' => [
-        '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+    'modules' => [
+        'v1' => [
+            'class' => app\module\v1\V1Mod::class,
+        ],
     ],
     'components' => [
-        'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '',
-        ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-        ],
-        'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
-        ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
-        ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
-        ],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
-        'db' => $db,
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
             'showScriptName' => false,
-            'rules' => [
+            'rules' => $route,
+        ],
+        'errorHandler' => [
+            'class' => ErrorHandle::class,
+        ],
+        'request' => [
+            'class' => Request::class,
+            'cookieValidationKey' => 'swoyii!@#$%^&*()',
+            'enableCsrfValidation' => false,
+            'parsers' => [
+                'application/json' => JsonParser::class,
             ],
         ],
-        */
+        'response' => [
+            'class' => Response::class,
+            'format' => \yii\web\Response::FORMAT_JSON,
+            'as log' => [
+                'class' => ResponseLog::class,
+                'except' => [],
+                'only' => [],
+            ],
+            'as filter' => [
+                'class' => ResponseFilter::class,
+                'except' => [],
+                'only' => [],
+            ],
+        ],
+        'sanitizer' => [
+            'class' => AntiXSS::class,
+        ],
+        'cache' => [
+            'class' => FileCache::class,
+        ],
+        'phpass' => [
+            'class' => PasswordHash::class,
+        ],
+        'hashid' => [
+            'class' => Hashid::class,
+            'key' => HASH_ID_KEY,
+            'length' => HASH_ID_LENGTH,
+        ],
+        'jwt' => [
+            'class' => Jwt::class,
+            'key' => JWT_KEY,
+            'expTime' => JWT_DURATION,
+        ],
+        'sw' => [
+            'class' => Sw::class,
+        ],
+        'db' => $db,
+        'log' => $log,
+        'redis' => $redis,
     ],
     'params' => $params,
 ];
-
-if (YII_ENV_DEV) {
-    // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
-    ];
-
-    $config['bootstrap'][] = 'gii';
-    $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
-    ];
-}
-
-return $config;
