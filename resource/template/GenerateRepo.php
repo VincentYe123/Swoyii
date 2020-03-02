@@ -12,9 +12,8 @@ use Yii;
 use yii\gii\CodeFile;
 
 /**
- * Class Generator
+ * Class Generator.
  *
- * @package    yii\gii\generators\model
  * @CreateTime 2020/3/2 11:58:15
  * @Author     : xingxiaohe@styd.cn
  */
@@ -26,7 +25,7 @@ class GenerateRepo extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'Repository Generator';
     }
@@ -34,7 +33,7 @@ class GenerateRepo extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'This generator generates an Repository class for Model class.';
     }
@@ -42,7 +41,7 @@ class GenerateRepo extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function requiredTemplates()
+    public function requiredTemplates(): array
     {
         return ['repository.php'];
     }
@@ -50,7 +49,7 @@ class GenerateRepo extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return array_merge(parent::attributeLabels(), [
             'ns' => 'Namespace',
@@ -61,7 +60,7 @@ class GenerateRepo extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function stickyAttributes()
+    public function stickyAttributes(): array
     {
         return array_merge(parent::stickyAttributes(), ['ns', 'modelName']);
     }
@@ -69,16 +68,16 @@ class GenerateRepo extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function generate()
+    public function generate(): array
     {
         $this->modelName = ucfirst($this->modelName);
         $files = [];
         $params = [
-            'className' => $this->modelName . 'Repository',
-            'modelName' => '\app\models\\' . $this->modelName,
+            'className' => $this->modelName.'Repository',
+            'modelName' => '\app\models\\'.$this->modelName,
         ];
         $files[] = new CodeFile(
-            Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $this->modelName . 'Repository' . '.php',
+            Yii::getAlias('@'.str_replace('\\', '/', $this->ns)).'/'.$this->modelName.'Repository'.'.php',
             $this->render('repository.php', $params)
         );
 

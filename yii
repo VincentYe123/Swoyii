@@ -9,8 +9,8 @@
  * @license http://www.yiiframework.com/license/
  */
 $env = getenv('RUNTIME_ENV');
-if ('' === $env || $env === false) {
-    $env = 'local';
+if (!$env) {
+    $env = 'dev';
 }
 
 defined('YII_DEBUG') or define('YII_DEBUG', true);

@@ -17,31 +17,31 @@
 echo "<?php\n";
 ?>
 
-namespace <?= $generator->ns ?>;
+namespace <?= $generator->ns; ?>;
 
 use Yii;
 
 /**
- * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
+ * This is the model class for table "<?= $generator->generateTableName($tableName); ?>".
  *
 <?php foreach ($properties as $property => $data): ?>
- * @property <?= "{$data['type']} \${$property}"  . ($data['comment'] ? ' ' . strtr($data['comment'], ["\n" => ' ']) : '') . "\n" ?>
+ * @property <?= "{$data['type']} \${$property}".($data['comment'] ? ' '.strtr($data['comment'], ["\n" => ' ']) : '')."\n"; ?>
 <?php endforeach; ?>
 <?php if (!empty($relations)): ?>
  *
 <?php foreach ($relations as $name => $relation): ?>
- * @property <?= $relation[1] . ($relation[2] ? '[]' : '') . ' $' . lcfirst($name) . "\n" ?>
+ * @property <?= $relation[1].($relation[2] ? '[]' : '').' $'.lcfirst($name)."\n"; ?>
 <?php endforeach; ?>
 <?php endif; ?>
  */
-class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
+class <?= $className; ?> extends <?= '\\'.ltrim($generator->baseClass, '\\')."\n"; ?>
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '<?= $generator->generateTableName($tableName) ?>';
+        return '<?= $generator->generateTableName($tableName); ?>';
     }
 
     /**
@@ -50,6 +50,6 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     */
     public static function getDb()
     {
-        return Yii::$app->get('<?= $generator->db ?>');
+        return Yii::$app->get('<?= $generator->db; ?>');
     }
 }

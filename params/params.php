@@ -3,10 +3,6 @@
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 
-if (!is_dir(__DIR__.'/../params')) {
-    return [];
-}
-
 $params = [];
 $fileList = FileHelper::findFiles(__DIR__.'/../params', ['only' => ['*.php'], 'except' => [basename(__FILE__)]]);
 
