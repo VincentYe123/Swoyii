@@ -78,6 +78,6 @@ Listen         Port:      9203
 ### 生成 Model && Repository
 
 ```
-$> .bin/yii gii/model --tableName={tableName} --modelClass={className} # 生成Model文件
-$> .bin/yii gii/repository --modelName={className} # 生成Repo文件
+$> ./bin/yii gii/model --tableName={tableName} --modelClass={className} # 生成Model文件
+$> ./bin/yii gii/repository --modelName={className} # 生成Repo文件
 ```

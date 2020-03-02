@@ -12,12 +12,8 @@ echo "<?php\n";
 
 namespace app\repositories;
 
-use UtoRepositories\Annotations\Model;
-use UtoRepositories\Repositories\BaseRepository;
-
-class <?= $className; ?> extends BaseRepository
+class <?= $className; ?> extends <?= '\\'.ltrim($generator->baseClass, '\\')."\n"; ?>
 {
-
     /**
      * @Model(class="<?= $modelName; ?>")
      */
