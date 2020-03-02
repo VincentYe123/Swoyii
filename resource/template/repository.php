@@ -14,8 +14,8 @@ echo "<?php\n";
 
 namespace app\repositories;
 
-use UtoRepositories\Annotations\Model;
-use UtoRepositories\Repositories\BaseRepository;
+use app\common\repository\Annotations\Model;
+use app\common\repository\repository\BaseRepository;
 
 class <?= $className ?> extends BaseRepository
 {

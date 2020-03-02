@@ -18,7 +18,8 @@
         "sizeg/yii2-jwt": "^1.0",
         "guzzlehttp/guzzle": "~6.0",
         "voku/anti-xss": "^4.1",
-        "hashids/hashids": "^4.0"
+        "hashids/hashids": "^4.0",
+        "doctrine/annotations": "^1.8"
     },
     "require-dev": {
         "yiisoft/yii2-gii": "~2.1.0",
