@@ -1,5 +1,6 @@
 <?php
 
+use yii\gii\generators\model\Generator;
 use app\common\StdoutTarget;
 use app\component\ErrorHandle;
 use yii\gii\Module;
@@ -41,11 +42,24 @@ $config = [
     'params' => $params,
 ];
 
-if (YII_ENV === 'local') {
-    // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'gii';
+if (YII_DEBUG) {
+    $config['bootstrap'][]    = 'gii';
     $config['modules']['gii'] = [
-        'class' => Module::class,
+        'class'      => Module::class,
+        'generators' => [
+            'model'      => [
+                'class'     => Generator::class,
+                'templates' => [
+                    'default' => '@app/resource/template',
+                ]
+            ],
+            'repository' => [
+                'class'     => \app\resource\template\GenerateRepo::class,
+                'templates' => [
+                    'default' => '@app/resource/template',
+                ]
+            ],
+        ],
     ];
 }
 
