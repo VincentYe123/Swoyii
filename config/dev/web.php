@@ -25,11 +25,7 @@ return [
     'name' => APP_NAME,
     'basePath' => dirname(__DIR__).'/../',
     'bootstrap' => ['log'],
-    'modules' => [
-        'demo' => [
-            'class' => app\module\demo\demoMod::class,
-        ],
-    ],
+    'modules' => [],
     'components' => [
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -80,13 +76,13 @@ return [
         ],
         'hashid' => [
             'class' => Hashid::class,
-            'key' => HASH_ID_KEY,
-            'length' => HASH_ID_LENGTH,
+            'key' => 'swoyii',
+            'length' => 10,
         ],
         'jwt' => [
             'class' => Jwt::class,
-            'key' => JWT_KEY,
-            'expTime' => JWT_DURATION,
+            'key' => 'swoyii',
+            'expTime' => 3600 * 7 * 24,
         ],
         'sw' => [
             'class' => Sw::class,

@@ -10,6 +10,7 @@ use yii\base\Exception;
 class Jwt extends \sizeg\jwt\Jwt
 {
     public $key;
+
     public $expTime = 3600 * 24 * 7;
 
     /**
