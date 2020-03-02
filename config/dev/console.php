@@ -1,9 +1,11 @@
 <?php
 
-use app\resource\template\GenerateRepo;
-use yii\gii\generators\model\Generator;
+use app\common\repository\GenerateRepo;
 use app\common\StdoutTarget;
 use app\component\ErrorHandle;
+use app\models\BaseModel;
+use app\repositories\BaseRepository;
+use yii\gii\generators\model\Generator;
 use yii\gii\Module;
 use yii\caching\FileCache;
 
@@ -50,12 +52,14 @@ if (YII_DEBUG) {
         'generators' => [
             'model' => [
                 'class' => Generator::class,
+                'baseClass' => BaseModel::class,
                 'templates' => [
                     'default' => '@app/resource/template',
                 ],
             ],
             'repository' => [
                 'class' => GenerateRepo::class,
+                'baseClass' => BaseRepository::class,
                 'templates' => [
                     'default' => '@app/resource/template',
                 ],

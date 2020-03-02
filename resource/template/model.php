@@ -20,9 +20,10 @@ echo "<?php\n";
 namespace <?= $generator->ns; ?>;
 
 use Yii;
+use yii\base\InvalidConfigException;
 
 /**
- * This is the model class for table "<?= $generator->generateTableName($tableName); ?>".
+ * This is the model class for table <?= $generator->generateTableName($tableName); ?>.
  *
 <?php foreach ($properties as $property => $data): ?>
  * @property <?= "{$data['type']} \${$property}".($data['comment'] ? ' '.strtr($data['comment'], ["\n" => ' ']) : '')."\n"; ?>
@@ -36,17 +37,14 @@ use Yii;
  */
 class <?= $className; ?> extends <?= '\\'.ltrim($generator->baseClass, '\\')."\n"; ?>
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    public static function tableName(): string
     {
         return '<?= $generator->generateTableName($tableName); ?>';
     }
 
     /**
-    * @return \yii\db\Connection the database connection used by this AR class.
-    * @throws \yii\base\InvalidConfigException
+    * @return object the database connection used by this AR class.
+    * @throws InvalidConfigException
     */
     public static function getDb()
     {

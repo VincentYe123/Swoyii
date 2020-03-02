@@ -12,12 +12,8 @@ echo "<?php\n";
 
 namespace app\repositories;
 
-use app\common\repository\Annotations\Model;
-use app\common\repository\repository\BaseRepository;
-
-class <?= $className; ?> extends BaseRepository
+class <?= $className; ?> extends <?= '\\'.ltrim($generator->baseClass, '\\')."\n"; ?>
 {
-
     /**
      * @Model(class="<?= $modelName; ?>")
      */

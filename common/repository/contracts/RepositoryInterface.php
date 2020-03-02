@@ -3,20 +3,19 @@
  * @Author     : aq340214388@gmail.com
  * @CreateTime 2019/11/26 14:50:24
  */
+
 namespace app\common\repository\contracts;
 
 use yii\db\ActiveRecord;
-use yii\db\QueryTrait;
 
 interface RepositoryInterface
 {
-
     /**
      * @return $this
      * @CreateTime 2019/11/26 16:19:45
      * @Author     : aq340214388@gmail.com
      */
-    public static function getInstance() ;
+    public static function getInstance();
 
     /**
      * @param        $id
@@ -78,7 +77,7 @@ interface RepositoryInterface
      * @CreateTime 2019/11/26 14:51:43
      * @Author     : aq340214388@gmail.com
      */
-    public function count(array $conditions) :int ;
+    public function count(array $conditions): int;
 
     /**
      * @param array $attributes
@@ -87,7 +86,7 @@ interface RepositoryInterface
      * @CreateTime 2019/11/26 14:51:48
      * @Author     : aq340214388@gmail.com
      */
-    public function create(array $attributes) :bool ;
+    public function create(array $attributes): bool;
 
     /**
      * @param       $id
@@ -98,7 +97,7 @@ interface RepositoryInterface
      * @CreateTime 2019/11/26 14:51:57
      * @Author     : aq340214388@gmail.com
      */
-    public function updateOneById($id, array $data = [], $isDel = 0) :bool ;
+    public function updateOneById($id, array $data = [], $isDel = 0): bool;
 
     /**
      * @param array $ids
@@ -109,7 +108,7 @@ interface RepositoryInterface
      * @CreateTime 2019/11/26 14:52:05
      * @Author     : aq340214388@gmail.com
      */
-    public function updateAllByIds(array $ids, array $data = [], $isDel = 0) :bool ;
+    public function updateAllByIds(array $ids, array $data = [], $isDel = 0): bool;
 
     /**
      * @param array $conditions
@@ -120,7 +119,7 @@ interface RepositoryInterface
      * @CreateTime 2019/11/26 14:52:09
      * @Author     : aq340214388@gmail.com
      */
-    public function updateAllByConditions(array $conditions = [], array $data = [], $isDel = 0) :bool ;
+    public function updateAllByConditions(array $conditions = [], array $data = [], $isDel = 0): bool;
 
     /**
      * @param $id
@@ -129,7 +128,7 @@ interface RepositoryInterface
      * @CreateTime 2019/11/26 14:52:13
      * @Author     : aq340214388@gmail.com
      */
-    public function deleteOneById($id) :bool ;
+    public function deleteOneById($id): bool;
 
     /**
      * @param array $ids
@@ -138,7 +137,7 @@ interface RepositoryInterface
      * @CreateTime 2019/11/26 14:52:21
      * @Author     : aq340214388@gmail.com
      */
-    public function deleteAllByIds(array $ids) :bool ;
+    public function deleteAllByIds(array $ids): bool;
 
     /**
      * @param array $conditions
@@ -147,7 +146,7 @@ interface RepositoryInterface
      * @CreateTime 2019/11/26 14:52:25
      * @Author     : aq340214388@gmail.com
      */
-    public function deleteAllByConditions(array $conditions) :bool ;
+    public function deleteAllByConditions(array $conditions): bool;
 
     /**
      * @param     $id
@@ -158,7 +157,7 @@ interface RepositoryInterface
      * @CreateTime 2019/11/26 14:52:29
      * @Author     : aq340214388@gmail.com
      */
-    public function incOne($id, $field, $count = 1) :int ;
+    public function incOne($id, $field, $count = 1): int;
 
     /**
      * @param     $id
@@ -169,7 +168,7 @@ interface RepositoryInterface
      * @CreateTime 2019/11/26 15:06:41
      * @Author     : aq340214388@gmail.com
      */
-    public function decOne($id, $field, $count = 1) :int ;
+    public function decOne($id, $field, $count = 1): int;
 
     /**
      * @param array $conditions
@@ -180,7 +179,7 @@ interface RepositoryInterface
      * @CreateTime 2019/11/26 15:06:45
      * @Author     : aq340214388@gmail.com
      */
-    public function incAll(array $conditions, $field, $count = 1) :int ;
+    public function incAll(array $conditions, $field, $count = 1): int;
 
     /**
      * @param array $conditions
@@ -191,7 +190,7 @@ interface RepositoryInterface
      * @CreateTime 2019/11/26 15:06:48
      * @Author     : aq340214388@gmail.com
      */
-    public function decAll(array $conditions, $field, $count = 1) :int ;
+    public function decAll(array $conditions, $field, $count = 1): int;
 
     /**
      * @param bool $isArray
@@ -221,5 +220,5 @@ interface RepositoryInterface
      * @CreateTime 2019/11/26 16:32:15
      * @Author     : aq340214388@gmail.com
      */
-    public function getQuery (array $conditions, $fields = '*', $isDel = 0);
+    public function getQuery(array $conditions, $fields = '*', $isDel = 0);
 }

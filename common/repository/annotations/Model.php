@@ -6,8 +6,6 @@
 
 namespace app\common\repository\annotations;
 
-use Doctrine\Common\Annotations\Annotation\Required;
-use Doctrine\Common\Annotations\Annotation\Target;
 use yii\db\ActiveRecord;
 
 /**
@@ -16,7 +14,6 @@ use yii\db\ActiveRecord;
  */
 final class Model
 {
-
     /**
      * @Required()
      */
@@ -24,8 +21,9 @@ final class Model
 
     public function __construct(array $values)
     {
-        if ((new $values['class']) instanceof ActiveRecord) {
+        if ((new $values['class']()) instanceof ActiveRecord) {
             $this->class = $values['class'];
+
             return;
         }
 

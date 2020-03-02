@@ -6,10 +6,11 @@
  * @CreateTime 2020/3/2 13:44:40
  */
 
-namespace app\resource\template;
+namespace app\common\repository;
 
 use Yii;
 use yii\gii\CodeFile;
+use yii\gii\Generator;
 
 /**
  * Class Generator.
@@ -17,10 +18,11 @@ use yii\gii\CodeFile;
  * @CreateTime 2020/3/2 11:58:15
  * @Author     : xingxiaohe@styd.cn
  */
-class GenerateRepo extends \yii\gii\Generator
+class GenerateRepo extends Generator
 {
-    public $ns = 'app\repositories';
     public $modelName;
+    public $ns = 'app\repositories';
+    public $baseClass = '';
 
     /**
      * {@inheritdoc}

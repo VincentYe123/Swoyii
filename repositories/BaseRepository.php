@@ -1,19 +1,19 @@
 <?php
-/**
- * @Author     : aq340214388@gmail.com
- * @CreateTime 2019/11/26 15:10:37
- */
 
-namespace app\common\repository\repository;
+namespace app\repositories;
 
+use app\common\repository\annotations\Model;
 use app\common\repository\contracts\RepositoryInterface;
+use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use ReflectionException;
+use ReflectionObject;
+use Throwable;
 use yii\db\ActiveRecord;
 
 class BaseRepository implements RepositoryInterface
 {
-
     /**
      * @var ActiveRecord
      */
@@ -46,28 +46,29 @@ class BaseRepository implements RepositoryInterface
 
     public function __construct()
     {
-        AnnotationRegistry::registerFile(__DIR__ . '/../annotations/Model.php');
+        AnnotationRegistry::registerFile(__DIR__.'/../annotations/Model.php');
     }
 
     /**
      * @return $this
      * @CreateTime 2019/11/26 15:47:40
      * @Author     : aq340214388@gmail.com
-     * @throws \Doctrine\Common\Annotations\AnnotationException
-     * @throws \ReflectionException
+     *
+     * @throws AnnotationException
+     * @throws ReflectionException
      */
     public static function getInstance(): self
     {
         $repoName = get_called_class();
-        $repo     = new $repoName;
+        $repo = new $repoName();
 
-        $reflClass = new \ReflectionObject($repo);
-        $reader    = new AnnotationReader();
+        $reflClass = new ReflectionObject($repo);
+        $reader = new AnnotationReader();
 
         /**
-         * @var $modelName Model
+         * @var Model
          */
-        $modelName   = $reader->getPropertyAnnotation($reflClass->getProperty('model'), Model::class);
+        $modelName = $reader->getPropertyAnnotation($reflClass->getProperty('model'), Model::class);
         $repo->model = $modelName->class;
 
         return $repo;
@@ -131,7 +132,7 @@ class BaseRepository implements RepositoryInterface
     {
         $this->orderBy = [
             'field' => $field,
-            'sort'  => $sort
+            'sort' => $sort,
         ];
 
         return $this;
@@ -149,7 +150,7 @@ class BaseRepository implements RepositoryInterface
     {
         $this->paginate = [
             'offset' => $offset,
-            'limit'  => $limit
+            'limit' => $limit,
         ];
 
         return $this;
@@ -164,7 +165,7 @@ class BaseRepository implements RepositoryInterface
      */
     public function count(array $conditions): int
     {
-        return (int)($this->getQuery($conditions)
+        return (int) ($this->getQuery($conditions)
                           ->count(1));
     }
 
@@ -174,15 +175,17 @@ class BaseRepository implements RepositoryInterface
      * @return bool
      * @CreateTime 2019/11/26 14:51:48
      * @Author     : aq340214388@gmail.com
-     * @throws \Throwable
+     *
+     * @throws Throwable
      */
     public function create(array $attributes): bool
     {
         /**
-         * @var $model ActiveRecord
+         * @var ActiveRecord
          */
         $model = new $this->model();
         $model->setAttributes($attributes, false);
+
         return $model->save();
     }
 
@@ -359,7 +362,7 @@ class BaseRepository implements RepositoryInterface
      */
     public function cache($isCache = true, $prefix = ''): self
     {
-        $this->isCache     = $isCache;
+        $this->isCache = $isCache;
         $this->cachePrefix = $prefix;
 
         return $this;
@@ -382,7 +385,7 @@ class BaseRepository implements RepositoryInterface
                              ->andWhere($conditions);
 
         if (!empty($this->orderBy)) {
-            $model->orderBy($this->orderBy['field'] . ' ' . $this->orderBy['sort']);
+            $model->orderBy($this->orderBy['field'].' '.$this->orderBy['sort']);
         }
 
         if (!empty($this->paginate)) {
@@ -390,7 +393,7 @@ class BaseRepository implements RepositoryInterface
                   ->limit($this->paginate['limit']);
         }
 
-        if ($this->asArray === true) {
+        if (true === $this->asArray) {
             $model->asArray();
         }
 
