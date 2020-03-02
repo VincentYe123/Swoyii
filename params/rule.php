@@ -4,6 +4,11 @@
 //The homepage URL is: https://www.yiiframework.com/doc/guide/2.0/zh-cn/input-validation
 use yii\helpers\FileHelper;
 
+if (!is_dir(__DIR__.'/../rule/header')) {
+    return [];
+}
+
+
 $ruleList = [
     'requestHeaderRule' => [],
     'requestParamRule' => [],
