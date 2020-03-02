@@ -34,14 +34,12 @@ if (!isset($argv[2])) {
     $serverName = strtolower($argv[2]);
 }
 
-switch ($serverName) {
-    case 'http':
-        $serverName = ucfirst($serverName);
-        break;
-    default:
-        echo "\e[1mServer are available: [http]\e[0m".PHP_EOL;
+if ('http' === $serverName) {
+    $serverName = ucfirst($serverName);
+} else {
+    echo "\e[1mServer are available: [http]\e[0m".PHP_EOL;
 
-        return;
+    return;
 }
 
 $configPath = __DIR__.'/../config/'.$env;
