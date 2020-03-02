@@ -5,7 +5,7 @@ use app\component\ErrorHandle;
 use yii\gii\Module;
 use yii\caching\FileCache;
 
-$params = require __DIR__.'/params.php';
+$params = require __DIR__.'/../../params/params.php';
 $db = require __DIR__.'/db.php';
 
 $config = [

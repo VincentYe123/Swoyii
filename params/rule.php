@@ -1,7 +1,7 @@
 <?php
 
-//yii2 params&header rules
-// The homepage URL is: https://www.yiiframework.com/doc/guide/2.0/zh-cn/input-validation
+//Yii2 params & header rules
+//The homepage URL is: https://www.yiiframework.com/doc/guide/2.0/zh-cn/input-validation
 use yii\helpers\FileHelper;
 
 $ruleList = [

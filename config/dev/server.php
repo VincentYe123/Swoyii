@@ -13,7 +13,7 @@ return [
     'dispatch_mode' => 3, //数据包分发策略：1 轮询、2 固定、3 抢占、4 IP分配、5 UID分配，7 stream 模式
     'daemonize' => 0, //守护进程化
     'reload_async' => true, //设置异步重启开关
-    'enable_coroutine' => false, //开启异步风格服务器的协程支持
+    'enable_coroutine' => true, //开启异步风格服务器的协程支持
     'log_file' => __DIR__.'/../../log/swoyii.log', //指定 Swoole 错误日志文件
     'pid_file' => __DIR__.'/../../bin/server.pid', //设置 pid 文件地址
 ];

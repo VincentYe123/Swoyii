@@ -15,7 +15,7 @@ return [
     ],
     'tokenValidate' => [
         'only' => [],
-        'except' => ['demo/index/index'],
+        'except' => [],
     ],
     'responseLog' => [
         'only' => [],

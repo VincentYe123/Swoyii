@@ -4,6 +4,7 @@ namespace app\server;
 
 use Swoole\Http\Request;
 use Swoole\Http\Server;
+use Swoole\Runtime;
 use Yii;
 use yii\base\InvalidConfigException;
 
@@ -15,6 +16,8 @@ class Http
 
     public function __construct($swConf, $appConf)
     {
+        //一键协程化：https://wiki.swoole.com/#/runtime
+        Runtime::enableCoroutine();
         $this->_swConf = $swConf;
         $this->_appConf = $appConf;
     }
