@@ -3,8 +3,6 @@
  * This is the template for generating the model class of a specified table.
  */
 
-use yii\db\ActiveRecord;
-
 /* @var $generator yii\gii\generators\model\Generator */
 /* @var $className string class name */
 /* @var $modelName string model name */
@@ -17,11 +15,11 @@ namespace app\repositories;
 use app\common\repository\Annotations\Model;
 use app\common\repository\repository\BaseRepository;
 
-class <?= $className ?> extends BaseRepository
+class <?= $className; ?> extends BaseRepository
 {
 
     /**
-     * @Model(class="<?= $modelName ?>")
+     * @Model(class="<?= $modelName; ?>")
      */
     public $model;
 }

@@ -23,16 +23,15 @@
 ├── helper/                ----- 助手函数
 ├── log/                   ----- 日志文件存放目录
 ├── middleware/            ----- 中间件代码目录
-├── model/                 ----- 模型、逻辑等代码目录
-│   ├── dao/
-│   └── entity/
+├── models/                ----- 数据模型目录
+├── repositories/          ----- 数据操作文件目录
 ├── module/                ----- 功能模块目录
 ├── params/                ----- 公共参数目录
 ├── resource/              ----- 资源目录
     ├── template/
 │   └── language/
 ├── routes/                ----- 路由文件目录
-├── rules/                 ----- 规则文件目录
+├── rule/                  ----- 规则文件目录
 ├── runtime/               ----- 临时文件目录
 ├── server/                ----- 服务文件目录
 ├── test/                  ----- 单元测试目录
@@ -41,9 +40,14 @@
 ```
 
 ### 快速启动
-- 安装Vendor
+- 安装依赖
 ```
 $> composer install
+```
+
+- 设置环境变量
+```
+$> export RUNTIME_ENV=dev
 ```
 
 - 启动服务器
@@ -69,4 +73,11 @@ Listen         Port:      9203
 [info] 2020-02-28 15:07:53 Http Server Start, Pid is 88624
 [info] 2020-02-28 15:07:53 Task Worker #1 Start 
 [info] 2020-02-28 15:07:53 Worker #0 Start 
+```
+
+### 生成 Model & Repository
+
+```
+$> ./yii gii/model --tableName={tableName} --modelClass={className} # 生成Model文件
+$> ./yii gii/repository --modelName={className} # 生成Repo文件
 ```
