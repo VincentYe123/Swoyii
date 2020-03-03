@@ -2,3 +2,4 @@
 /.DS_Store
 /vendor
 /bin/server.pid
+/composer.lock
