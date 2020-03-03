@@ -32,7 +32,7 @@ class FileTarget extends \yii\log\FileTarget
         }
 
         go(function () use ($text) {
-            file_put_contents($this->logFile, $text, FILE_APPEND);
+            file_put_contents($this->logFile, $text, FILE_APPEND | LOCK_EX);
         });
 
         if (null !== $this->fileMode) {
