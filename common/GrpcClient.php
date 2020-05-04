@@ -18,6 +18,9 @@ class GrpcClient
      */
     private static $instance = null;
 
+    //请求类
+    public $request;
+
     //服务端地址
     private $hostname;
 
@@ -39,8 +42,8 @@ class GrpcClient
     //成功响应状态码
     public const GRPC_STATUS_OK = 0;
 
-    //超时时间
-    public const DEFAULT_TIME_OUT = 1000;
+    //超时时间(微妙)
+    public const DEFAULT_TIME_OUT = 2 * 1000 * 1000;
 
     private function __construct(array $hostname)
     {
@@ -107,21 +110,22 @@ class GrpcClient
      * @param string $serviceName
      * @param string $action
      * @param        $request
-     * @param int    $timeOut
+     * @param int    $timeOut     超时时间（微妙）
      *
      * @CreateTime 2020/4/21 16:37:08
      * @Author     : yechangqing@styd.cn
      */
     public function unaryCall(string $serviceName, string $action, $request, int $timeOut = self::DEFAULT_TIME_OUT)
     {
-        $isNew = self::DEFAULT_TIME_OUT === $timeOut;
-        $this->trigger(static::BEFORE_REQUEST);
-        $client = $this->getClient($serviceName, $timeOut, $isNew);
+        $this->request = $request;
+        $this->trigger(self::BEFORE_REQUEST);
+        $client = $this->getClient($serviceName);
 
-        [$reply, $status] = $client->$action($request)->wait();
-        if (self::GRPC_STATUS_OK != $status->code) {
-            throw new \RuntimeException("GRPC call failed service is: {$serviceName}, action is: {$action}");
+        [$reply, $status] = $client->$action($this->request, [], ['timeout' => $timeOut])->wait();
+        if (self::GRPC_STATUS_OK !== $status->code) {
+            throw new \RuntimeException("GRPC call failed: {$status->details}, service is: {$serviceName}, action is: {$action}");
         }
+        $this->trigger(self::AFTER_REQUEST);
 
         return $reply->getMessage();
     }
@@ -130,30 +134,18 @@ class GrpcClient
      * 获取 Grpc 客户端.
      *
      * @param string $serviceName
-     * @param int    $timeOut
-     * @param bool   $isNew
      * @param null   $channel
      *
      * @return mixed
      * @CreateTime 2020/4/21 15:08:17
      * @Author     : yechangqing@styd.cn
      */
-    private function getClient(string $serviceName, int $timeOut, bool $isNew = false, $channel = null)
+    private function getClient(string $serviceName, $channel = null)
     {
-        if ($isNew) {
-            return new $serviceName($this->getHostname(),
-                [
-                    'credentials' => ChannelCredentials::createInsecure(),
-                    'timeout' => $timeOut,
-                ],
-                $channel);
-        }
-
         if (empty($this->clients[$serviceName])) {
             $this->clients[$serviceName] = new $serviceName($this->getHostname(),
                 [
-                    'credentials' => ChannelCredentials::createInsecure(),
-                    'timeout' => $timeOut,
+                    'credentials' => ChannelCredentials::createInsecure()
                 ],
                 $channel);
         }

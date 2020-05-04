@@ -2,6 +2,9 @@
 
 namespace app\controllers;
 
+use Helloworld\HelloClient;
+use Helloworld\HelloRequest;
+
 /**
  * Created by PhpStorm.
  *
@@ -10,8 +13,10 @@ namespace app\controllers;
  */
 class IndexController extends BaseController
 {
-    public function actionTest(): void
+    public function actionTest()
     {
-        \Yii::$app->grpc->client->unaryCall(BaseController::class, 'behaviors', $this);
+        $req = new HelloRequest();
+        $req->setName('grpc');
+        return [\Yii::$app->grpc->client->unaryCall(HelloClient::class, 'SayHello', $req)];
     }
 }
