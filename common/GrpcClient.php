@@ -18,14 +18,17 @@ class GrpcClient
      */
     private static $instance = null;
 
-    //请求类
+    //请求
     public $request;
+
+    //响应
+    public $response;
 
     //服务端地址
     private $hostname;
 
-    //请求头 key 仅支持 '-' 连接单词
-    private $header = [];
+    //元数据格式：key=>[$value]
+    private $metadata = [];
 
     //事件函数
     private $events = [];
@@ -68,14 +71,14 @@ class GrpcClient
         return $this->hostname[array_rand($this->hostname)];
     }
 
-    public function setHeader(array $header): void
+    public function setMetadata(array $metadata): void
     {
-        $this->header = array_merge($this->header, $header);
+        $this->metadata = array_merge($this->metadata, $metadata);
     }
 
-    public function getHeader(array $header): array
+    public function getMetadata(): array
     {
-        return $this->header;
+        return $this->metadata;
     }
 
     public static function getInstance(array $hostname): GrpcClient
@@ -117,17 +120,23 @@ class GrpcClient
      */
     public function unaryCall(string $serviceName, string $action, $request, int $timeOut = self::DEFAULT_TIME_OUT)
     {
+        $this->initRequest();
+
         $this->request = $request;
         $this->trigger(self::BEFORE_REQUEST);
-        $client = $this->getClient($serviceName);
 
-        [$reply, $status] = $client->$action($this->request, [], ['timeout' => $timeOut])->wait();
+        $client = $this->getClient($serviceName);
+        [$reply, $status] = $client->$action($this->request, $this->metadata, ['timeout' => $timeOut])->wait();
+        //todo:: 捕获 grpc 内部错误
         if (self::GRPC_STATUS_OK !== $status->code) {
+            $this->response = null;
             throw new \RuntimeException("GRPC call failed: {$status->details}, service is: {$serviceName}, action is: {$action}");
         }
+
+        $this->response = $reply->getMessage();
         $this->trigger(self::AFTER_REQUEST);
 
-        return $reply->getMessage();
+        return $this->response;
     }
 
     /**
@@ -145,11 +154,23 @@ class GrpcClient
         if (empty($this->clients[$serviceName])) {
             $this->clients[$serviceName] = new $serviceName($this->getHostname(),
                 [
-                    'credentials' => ChannelCredentials::createInsecure()
+                    'credentials' => ChannelCredentials::createInsecure(),
                 ],
                 $channel);
         }
 
         return $this->clients[$serviceName];
+    }
+
+    /**
+     * 初始化请求
+     *
+     * @CreateTime 2020/5/8 16:01:43
+     * @Author     : yechangqing@styd.cn
+     */
+    private function initRequest(): void
+    {
+        $this->response = null;
+        $this->metadata = [];
     }
 }

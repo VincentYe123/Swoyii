@@ -27,5 +27,11 @@ class Grpc extends Component
     public function init()
     {
         $this->client = GrpcClient::getInstance($this->hostname);
+        $this->client->registerEvent(GrpcClient::BEFORE_REQUEST, static function ($client){
+            /**
+             * @var $client GrpcClient
+             */
+            $client->setMetadata(['x-request-id' => ['111111']]);
+        });
     }
 }
