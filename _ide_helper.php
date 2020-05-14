@@ -35,4 +35,7 @@ class MyApplication
 
     /** @var app\component\PasswordHash */
     public $phpass;
+
+    /** @var app\component\Grpc */
+    public $grpc;
 }

@@ -8,7 +8,6 @@ use yii\db\Exception;
 
 class DbKeepAlive extends Command
 {
-
     /**
      * @param bool $forRead
      * @param int  $retry
@@ -45,7 +44,7 @@ class DbKeepAlive extends Command
             $date = date('Y-m-d H:i:s');
             $message = $e->getMessage()."; Failed to prepare SQL: $sql";
             echo "[{$date} DB keep alive] ".$message.PHP_EOL;
-            if ($this->checkDb($e->getMessage()) && $retry) {
+            if ($retry && $this->checkDb($e->getMessage())) {
                 echo "[{$date} DB keep alive] Reconnect to mysql".PHP_EOL;
                 $this->db->close();
                 $this->prepare($forRead, --$retry);

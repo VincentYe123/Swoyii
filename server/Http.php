@@ -62,6 +62,10 @@ class Http
         }
         echo "[info] {$date} {$workName} #{$workerId} Start ".PHP_EOL;
 
+        if (!extension_loaded('grpc')){
+            echo "[info] {$date} {$workName} #{$workerId} Try to load grpc ".PHP_EOL;
+            dl('grpc.so');
+        }
         new Application($this->_appConf);
         Yii::$app->sw->setSwServer($server);
     }
